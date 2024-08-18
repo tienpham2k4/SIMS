@@ -7,7 +7,11 @@
 @rendermode InteractiveServer
 <PageTitle>Add Grades</PageTitle>
 
-<h1>Add Grades</h1>
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Add Grades</h1>
+    <a class="btn btn-success" href="/courses">Back</a>
+</div>
 @if (showNotification)
 {
     <div class="alert alert-success mt-3">Grades and Notes have been successfully saved!</div>

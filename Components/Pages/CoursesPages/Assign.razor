@@ -10,8 +10,11 @@
 
 <h1>Assign Student into Course</h1>
 
-<div>
-    <h4>Courses</h4>
+<div >
+    <div class="d-flex justify-content-between align-items-center">
+        <h4>Courses</h4>
+        <a class="btn btn-success" href="/courses">Back</a>
+    </div>
     <hr />
     @if (courses is null)
     {
@@ -42,7 +45,7 @@
                     <label>Select Student</label>
                     <select id="studentSelect" multiple class="form-control" style="width: 100%;"></select>
                 </div>
-                <button class="btn btn-primary" @onclick="EnrollStudents">Enroll</button>
+                <button class="btn btn-primary mt-3" @onclick="EnrollStudents">Enroll</button>
 
             </div>
         </div>

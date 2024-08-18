@@ -15,8 +15,8 @@
 
 <QuickGrid Class="table" Items="DbFactory.CreateDbContext().Semesters">
     <PropertyColumn Property="semesters => semesters.Name" />
-    <PropertyColumn Property="semesters => semesters.StartDate" />
-    <PropertyColumn Property="semesters => semesters.EndDate" />
+    <PropertyColumn Property="semesters => semesters.StartDate" Title=" Start Date" />
+    <PropertyColumn Property="semesters => semesters.EndDate" Title=" End Date" />
 
     <TemplateColumn Context="semesters">
         <a href="@($"semesters/edit?id={semesters.Id}")"><i class="fa-solid fa-pen-to-square"></i></a> |

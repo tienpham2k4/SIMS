@@ -7,7 +7,7 @@
 
 <PageTitle>Create</PageTitle>
 
-<h1><i class="fa-solid fa-square-plus"></i></h1>
+<h1>Create</h1>
 
 <h4>Semesters</h4>
 <hr />
@@ -22,12 +22,12 @@
                 <ValidationMessage For="() => Semesters.Name" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="startdate" class="form-label">StartDate:</label> 
+                <label for="startdate" class="form-label">Start Date:</label> 
                 <InputDate id="startdate" @bind-Value="Semesters.StartDate" class="form-control" /> 
                 <ValidationMessage For="() => Semesters.StartDate" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="enddate" class="form-label">EndDate:</label> 
+                <label for="enddate" class="form-label">End Date:</label> 
                 <InputDate id="enddate" @bind-Value="Semesters.EndDate" class="form-control" /> 
                 <ValidationMessage For="() => Semesters.EndDate" class="text-danger" /> 
             </div>        
@@ -37,7 +37,7 @@
 </div>
 
 <div>
-    <a href="/semesters">Back to List</a>
+    <a class="btn btn-success mt-3" href="/semesters">Back to List</a>
 </div>
 
 @code {

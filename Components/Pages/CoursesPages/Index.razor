@@ -12,7 +12,7 @@
 @if (BlazorApp3.Components.Layout.NavMenu.isAdmin)
 {
     <p>
-        <a href="courses/create"><i class="fa-solid fa-square-plus"></i></a>
+        <a href="courses/create" class="btn btn-success"> Create New Courses</a>
     </p>
 }
 
@@ -41,15 +41,24 @@
                 <td>
                     @if (BlazorApp3.Components.Layout.NavMenu.isAdmin)
                     {
-                        <a href="@($"courses/edit?id={course.Id}")"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href = "@($"courses / details ? id ={ course.Id}")" > <i class="fa-solid fa-circle-info"></i></a>
-                        <a href="@($"courses/delete? id = {course.Id}")"><i class="fa-solid fa-trash"></i></a>
-                        <br />
+                        <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                            <a href="@($"courses/edit?id={course.Id}")"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="@($"courses/details?id={course.Id}")"><i class="fa-solid fa-circle-info"></i></a>
+                            <a href="@($"courses/delete?id={course.Id}")"><i class="fa-solid fa-trash"></i></a>
+
+                            <!-- Buttons placed in between icons -->
+                            <a href="@($"courses/assign?id={course.Id}")"
+                               style="display: inline-block; padding: 4px 8px; background-color: #4CAF50; color: white; text-align: center; text-decoration: none; border-radius: 4px; font-size: 14px; transition: background-color 0.3s ease;">
+                                Assign students
+                            </a>
+                            <a href="@($"courses/grade?id={course.Id}")"
+                               style="display: inline-block; padding: 4px 8px; background-color: #4CAF50; color: white; text-align: center; text-decoration: none; border-radius: 4px; font-size: 14px; transition: background-color 0.3s ease;">
+                                Add Grades
+                            </a>
+                        </div>
                     }
-                        <a href="@($"courses/assign?id={course.Id}")">Assign students</a>
-                        <a href="@($"courses/grade?id={course.Id}")" class="ms-3">Add Grades</a>
-                    
                 </td>
+
             </tr>
         }
     </tbody>
