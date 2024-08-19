@@ -7,6 +7,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 @using BlazorApp3.Data
+@using BlazorApp3.Models
 @inject IUserStore<ApplicationUser> UserStore
 
 @inject IDbContextFactory<BlazorApp3.Data.ApplicationDbContext> DbFactory
@@ -16,42 +17,52 @@
 
 <PageTitle>Create</PageTitle>
 
-<h1> Create </h1>
+<h1><i class="fa-solid fa-square-plus"></i></h1>
 
-<h4>Lectures</h4>
+<h4>Lecturers</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <EditForm method="post" Model="Lecture"
-                  OnValidSubmit="AddStudents" FormName="create" Enhance>
+        <EditForm method="post" Model="Lectures"
+                  OnValidSubmit="AddLectures" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" />
             <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>
-                <InputText id="name" @bind-Value="Lecture.Name" class="form-control" />
-                <ValidationMessage For="() => Lecture.Name" class="text-danger" />
+                <InputText id="name" @bind-Value="Lectures.Name" class="form-control" />
+                <ValidationMessage For="() => Lectures.Name" class="text-danger" />
             </div>
             <ValidationSummary class="text-danger" />
             <div class="mb-3">
                 <label for="name" class="form-label">Code:</label>
-                <InputText id="name" @bind-Value="Lecture.Code" class="form-control" />
-                <ValidationMessage For="() => Lecture.Code" class="text-danger" />
+                <InputText id="name" @bind-Value="Lectures.Code" class="form-control" />
+                <ValidationMessage For="() => Lectures.Code" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Address:</label>
+                <InputText id="name" @bind-Value="Lectures.Address" class="form-control" />
+                <ValidationMessage For="() => Lectures.Address" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Sex:</label>
+                <InputText id="name" @bind-Value="Lectures.Sex" class="form-control" />
+                <ValidationMessage For="() => Lectures.Sex" class="text-danger" />
             </div>
             <ValidationSummary class="text-danger" />
             <div class="mb-3">
                 <label for="name" class="form-label">Email:</label>
-                <InputText id="name" @bind-Value="Lecture.Email" class="form-control" />
-                <ValidationMessage For="() => Lecture.Email" class="text-danger" />
+                <InputText id="name" @bind-Value="Lectures.Email" class="form-control" />
+                <ValidationMessage For="() => Lectures.Email" class="text-danger" />
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Phone:</label>
-                <InputText id="name" @bind-Value="Lecture.PhoneNumber" class="form-control" />
-                <ValidationMessage For="() => Lecture.PhoneNumber" class="text-danger" />
+                <InputText id="name" @bind-Value="Lectures.PhoneNumber" class="form-control" />
+                <ValidationMessage For="() => Lectures.PhoneNumber" class="text-danger" />
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Password:</label>
-                <InputText id="name" @bind-Value="Lecture.PasswordHash" class="form-control" />
-                <ValidationMessage For="() => Lecture.PasswordHash" class="text-danger" />
+                <InputText id="name" @bind-Value="Lectures.PasswordHash" class="form-control" />
+                <ValidationMessage For="() => Lectures.PasswordHash" class="text-danger" />
             </div>
 
 
@@ -61,40 +72,41 @@
 </div>
 
 <div>
-    <a class="btn btn-success mt-3" href="/lecturers">Back to List</a>
+    <a href="/lectures">Back to List</a>
 </div>
 
 @code {
 
     [SupplyParameterFromForm]
-    public BlazorApp3.Data.ApplicationUser Lecture { get; set; } = new();
+    public BlazorApp3.Data.ApplicationUser Lectures { get; set; } = new();
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
 
-    public async Task AddStudents()
+    public async Task AddLectures()
     {
         var passwordHasher = new Microsoft.AspNetCore.Identity.PasswordHasher<Microsoft.AspNetCore.Identity.IdentityUser>();
         using var context = DbFactory.CreateDbContext();
         BlazorApp3.Data.ApplicationUser newStudent = new Data.ApplicationUser()
-        {
+            {
 
-            Code = Lecture.Code,
-            Name = Lecture.Name,
-            PhoneNumber = Lecture.PhoneNumber,
-            Email = Lecture.Email,
-            UserName = Lecture.Code,
-            NormalizedEmail = Lecture.Email.ToUpper(),
-            NormalizedUserName = Lecture.Code.ToUpper(),
-            Role = "Lecture",
-            LockoutEnabled = true
-        };
-        await UserStore.SetUserNameAsync(newStudent, Lecture.Email, CancellationToken.None);
+                Code = Lectures.Code,
+                Name = Lectures.Name,
+                PhoneNumber = Lectures.PhoneNumber,
+                Address = Lectures.Address,
+                Sex = Lectures.Sex,
+                Email = Lectures.Email,
+                UserName = Lectures.Code,
+                NormalizedEmail = Lectures.Email.ToUpper(),
+                NormalizedUserName = Lectures.Code.ToUpper(),
+                Role = "Lecture",
+                LockoutEnabled = true
+            };
+        await UserStore.SetUserNameAsync(newStudent, Lectures.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
-        await emailStore.SetEmailAsync(newStudent, Lecture.Email, CancellationToken.None);
-        var result = await UserManager.CreateAsync(newStudent, Lecture.PasswordHash);
+        await emailStore.SetEmailAsync(newStudent, Lectures.Email, CancellationToken.None);
+        await UserManager.CreateAsync(newStudent, Lectures.PasswordHash);
 
-
-        NavigationManager.NavigateTo("/lecturers");
+        NavigationManager.NavigateTo("/lectures");
     }
     private IUserEmailStore<ApplicationUser> GetEmailStore()
     {

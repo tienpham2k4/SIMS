@@ -2,45 +2,77 @@
 
 @using Microsoft.EntityFrameworkCore
 @using BlazorApp3.Models
+@using BlazorApp3.Data
 @inject IDbContextFactory<BlazorApp3.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 
 <PageTitle>Details</PageTitle>
 
-<h1><i class="fa-solid fa-circle-info"></i></h1>
+<h1><i class="fa-solid fa-circle-info"></i> Lecturer Details</h1>
 
 <div>
-    <h4>Lectures</h4>
-    <hr />
-    @if (departments is null)
+    @if (lecturer is null)
     {
         <p><em>Loading...</em></p>
     }
     else
     {
-        <dl class="row">
-            <dt class="col-sm-2">Name</dt>
-            <dd class="col-sm-10">@departments.Name</dd>
-        </dl>
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="row">
+                    <dt class="col-sm-4">Name:</dt>
+                    <dd class="col-sm-8">@lecturer.Name</dd>
+
+                    <dt class="col-sm-4">Code:</dt>
+                    <dd class="col-sm-8">@lecturer.Code</dd>
+
+                    <dt class="col-sm-4">Phone Number:</dt>
+                    <dd class="col-sm-8">@lecturer.PhoneNumber</dd>
+
+                    <dt class="col-sm-4">Address:</dt>
+                    <dd class="col-sm-8">@lecturer.Address</dd>
+
+                    <dt class="col-sm-4">Sex:</dt>
+                    <dd class="col-sm-8">@lecturer.Sex</dd>
+
+                    <dt class="col-sm-4">Email:</dt>
+                    <dd class="col-sm-8">@lecturer.Email</dd>
+
+                    <dt class="col-sm-4">Role:</dt>
+                    <dd class="col-sm-8">@lecturer.Role</dd>
+                </dl>
+            </div>
+        </div>
+
         <div>
-            <a href="@($"/departments/edit?id={departments.Id}")">Edit</a> |
-            <a href="@($"/departments")">Back to List</a>
+            <a class="mx-1 btn btn-outline-success" href="@($"/lecturers/edit?id={lecturer.Id}")">Edit</a>
+            <a class="btn btn-success" href="/lecturers">Back to List</a>
         </div>
     }
 </div>
 
 @code {
-    Departments? departments;
+    private ApplicationUser? lecturer;
 
     [SupplyParameterFromQuery]
-    public int Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        using var context = DbFactory.CreateDbContext();
-        departments = await context.Departments.FirstOrDefaultAsync(m => m.Id == Id);
+        if (Guid.TryParse(Id, out var idGuid))
+        {
+            var idString = idGuid.ToString(); // Convert Guid to string for comparison
 
-        if (departments is null)
+            using var context = DbFactory.CreateDbContext();
+            lecturer = await context.ApplicationUser
+                .FirstOrDefaultAsync(u => u.Id == idString && u.Role == "Lecture");
+
+            if (lecturer is null)
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+        }
+        else
         {
             NavigationManager.NavigateTo("notfound");
         }

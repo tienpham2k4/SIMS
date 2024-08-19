@@ -16,11 +16,11 @@
 
 <QuickGrid Class="table"
            Items='@(DbFactory.CreateDbContext().ApplicationUser.Where(u => u.Role.Equals("Lecture")))'>
-
-
     <PropertyColumn Property="users => users.Name" />
     <PropertyColumn Property="users => users.Code" />
-    <PropertyColumn Property="users => users.PhoneNumber"/>
+    <PropertyColumn Property="users => users.PhoneNumber" Title="Phone Number"/>
+    <PropertyColumn Property="users => users.Address" />
+    <PropertyColumn Property="users => users.Sex" />
     <PropertyColumn Property="users => users.Email" />
     <PropertyColumn Property="users => users.Role" />
 
